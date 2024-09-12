@@ -1,7 +1,10 @@
 import pygame, sys
 from pygame.locals import *
+from math import *
 
-from sprite_funcs import *
+from Bird import Bird
+from Pipe import Pipe
+from Ground import Ground
 from setup_funcs import *
 
 pygame.init()
@@ -36,8 +39,6 @@ def home(score):
      # SPRITE GROUPS------------------------------------------------------------
      all_sprites = pygame.sprite.Group()
 
-     # SPRITES ------------------------------------------------------------
-     
      
      # GAME LOOP ------------------------------------------------------------
      run = True
@@ -91,10 +92,7 @@ def home(score):
                if score > int(high_score):
                     write_highscore(score)
         
-          
-                    
-          
-     
+
           # TITLE
           # Text outline
           draw_text(floor(WIDTH/2)-2, floor(HEIGHT*0.2)-2 , "FLAPPY BIRD", light_green, 50, win) # top left
@@ -112,9 +110,9 @@ def home(score):
 
      main()
 
-# PAUSE GAME
 
-     
+
+# PAUSE GAME
 def pause(win, WIDTH, HEIGHT):
      clock = pygame.time.Clock()
      fps = 60
@@ -178,13 +176,13 @@ def main():
 
      # grounds
      GROUND_HEIGHT = floor(HEIGHT*0.8)
-     ground1 = ground_class(0, GROUND_HEIGHT, WIDTH+1, HEIGHT - GROUND_HEIGHT, dark_green, light_green, green, highlight_col, dirt_col, dirt_shadow_col)
-     ground2 = ground_class(WIDTH, GROUND_HEIGHT, WIDTH+1, HEIGHT - GROUND_HEIGHT, dark_green, light_green, green, highlight_col, dirt_col, dirt_shadow_col)
+     ground1 = Ground(0, GROUND_HEIGHT, WIDTH+1, HEIGHT - GROUND_HEIGHT, dark_green, light_green, green, highlight_col, dirt_col, dirt_shadow_col)
+     ground2 = Ground(WIDTH, GROUND_HEIGHT, WIDTH+1, HEIGHT - GROUND_HEIGHT, dark_green, light_green, green, highlight_col, dirt_col, dirt_shadow_col)
      grounds.add(ground1, ground2)
 
      # bird
      width = floor(WIDTH*0.06)
-     bird = bird_class(floor(WIDTH*0.1), floor(GROUND_HEIGHT/2) - floor(width/2), width, width)
+     bird = Bird(floor(WIDTH*0.1), floor(GROUND_HEIGHT/2) - floor(width/2), width, width)
      all_sprites.add(bird)
 
      # pipes

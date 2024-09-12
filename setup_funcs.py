@@ -1,8 +1,7 @@
-import pygame, sys, random
-from pygame.locals import *
-
+import pygame, random
 from math import *
-from sprite_funcs import *
+
+from Pipe import Pipe
 
 # TEXT
 def draw_text(x, y, string, col, size, window):
@@ -25,69 +24,6 @@ def write_highscore(score):
      file = open("high_score.txt", "w")
      file.write(str(score))
 
-     
-
-     
-     
-# FLOOR
-
-class ground_class(pygame.sprite.Sprite):
-     def __init__(self, x, y, width, height, dark_green, light_green, green, highlight_col, dirt_col, dirt_shadow_col):
-          self.x = x
-          self.y = y
-          self.width = width
-          self.height = height
-          super().__init__()
-
-          # create image
-          self.image = pygame.Surface((self.width, self.height))
-          self.rect = self.image.get_rect()
-          self.rect.x = self.x
-          self.rect.y = self.y
-          
-          self.image.fill(green)
-
-
-          # TOP BAR
-          top_bar = pygame.Rect(0, floor(self.height*0.05), self.width, floor(self.height*0.1))
-          line_width =  floor(self.height*0.025)
-          
-          # draw diagonal line pattern
-          line_gap = floor(top_bar.width/20)
-          
-          for n in range(0, top_bar.width, line_gap):
-               pygame.draw.line(self.image, light_green, (n, top_bar.y + top_bar.height + 10), (n +line_gap, top_bar.y - 10), floor(line_gap/2))
-               
-          # draw bottom dirt
-          pygame.draw.rect(self.image, dirt_col, (0, top_bar.y + top_bar.height , self.rect.width, self.rect.height))
-
-          # draw top black line
-          pygame.draw.line(self.image, (30,30,0), (- 10, 0), (top_bar.width + 10, 0), line_width)
-
-          # draw top highlight line
-          pygame.draw.line(self.image, highlight_col, (- 10, line_width), (top_bar.width + 10, line_width), line_width)
-
-           # draw bottom  green shadow
-          pygame.draw.line(self.image, dark_green, (- 10, top_bar.y + top_bar.height), (top_bar.width + 10, top_bar.y + top_bar.height), line_width)
-
-          # draw bottom dirt shadow
-          pygame.draw.line(self.image, dirt_shadow_col, (- 10, top_bar.y + top_bar.height + line_width), (top_bar.width + 10, top_bar.y + top_bar.height + line_width), line_width)
-
-          
-          
-     def move(self, screen_width):
-          
-          self.rect.x -= 1
-          if self.rect.x < -screen_width:
-               self.rect.x = screen_width
-
-
-def draw_floor(ground, WIDTH, HEIGHT, win, dirt_col, dirt_shadow_col):
-     # BELOW GROUND LINE
-     height = HEIGHT - (ground.rect.y + ground.rect.height)
-
-     pygame.draw.rect(win, ())
-     
 
 
 def create_pipe_pair(pipes, WIDTH, GROUND_HEIGHT, gap_height, dark_green, light_green, green, highlight_col, add_num, bird):
@@ -143,11 +79,11 @@ def create_pipe_pair(pipes, WIDTH, GROUND_HEIGHT, gap_height, dark_green, light_
 
                     
                          
-          pipe1 = pipe_class(x, True, height1, collar_height, collar_width,  WIDTH, GROUND_HEIGHT, dark_green, light_green, green, highlight_col)
+          pipe1 = Pipe(x, True, height1, collar_height, collar_width,  WIDTH, GROUND_HEIGHT, dark_green, light_green, green, highlight_col)
      
           # pipe 2
           height2 = pipe_space - height1
-          pipe2 = pipe_class(x, False, height2, collar_height, collar_width, WIDTH, GROUND_HEIGHT, dark_green, light_green, green, highlight_col)
+          pipe2 = Pipe(x, False, height2, collar_height, collar_width, WIDTH, GROUND_HEIGHT, dark_green, light_green, green, highlight_col)
 
      
           pipes.add(pipe1, pipe2)
@@ -158,4 +94,4 @@ def create_pipe_pair(pipes, WIDTH, GROUND_HEIGHT, gap_height, dark_green, light_
 
 
 
-
+     
